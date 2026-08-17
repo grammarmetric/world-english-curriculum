@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-accent="orange">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>
+/* Set the theme before first paint so the page never flashes the wrong one.
+   Dark is the default; an explicit OS light preference still wins. */
+(function(){
+  var t = null;
+  try { t = localStorage.getItem('gm_theme'); } catch (e) {}
+  if (t !== 'light' && t !== 'dark') {
+    t = (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+
+<title>Your Child's 12-Week English Programme | GrammarMetric</title>
+<meta name="description" content="A parent's guide to the GrammarMetric 12-week English programme, built on Cambridge World English Stage 5 — what your child learns each week, and how homework works.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   Ported from the GrammarMetric "ELECTRIC" design system (shared.css).
+   Single page, single accent (orange) — self-contained per this repo's
+   no-build convention, so the full token set is inlined rather than linked.
+   ========================================================================== */
+:root {
+  --gm-yellow:       #FFFC00;
+  --gm-yellow-text:  #736f00;
+  --gm-orange:       #FF3503;
+  --gm-orange-text:  #3d0f00;
+  --rgb-orange:      255, 53, 3;
+
+  --radius-card:    14px;
+  --radius-control: 10px;
+  --radius-pill:    20px;
+  --radius-badge:   9px;
+
+  --font: 'Lexend', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --gap:      18px;
+  --pad-card: 24px;
+  --sec-y:    72px;
+
+  --accent:      var(--gm-orange);
+  --accent-text: var(--gm-orange-text);
+  --accent-rgb:  var(--rgb-orange);
+}
+:root, :root[data-theme="dark"] {
+  --bg:           #050505;
+  --text:         #ffffff;
+  --muted:        rgba(255, 255, 255, 0.55);
+  --card:         rgba(255, 255, 255, 0.04);
+  --line:         rgba(255, 255, 255, 0.08);
+  --line-strong:  rgba(255, 255, 255, 0.16);
+  --solid:        #0d0d0d;
+  --accent-ink:   var(--accent);
+}
+:root[data-theme="light"] {
+  --bg:           #ffffff;
+  --text:         #050505;
+  --muted:        rgba(5, 5, 5, 0.62);
+  --card:         rgba(5, 5, 5, 0.03);
+  --line:         rgba(5, 5, 5, 0.08);
+  --line-strong:  rgba(5, 5, 5, 0.16);
+  --solid:        #ffffff;
+  --accent-ink:   var(--accent-text);
+}
+
+* { box-sizing: border-box; }
+html { font-family: var(--font); -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+button { font-family: inherit; font-size: inherit; }
+body {
+  margin: 0; font-family: var(--font); font-weight: 400; font-size: 16px; line-height: 1.65;
+  color: var(--text); background: var(--bg); overflow-x: hidden;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4 { font-weight: 500; margin: 0 0 0.5em; letter-spacing: -0.02em; line-height: 1.15; text-wrap: balance; }
+h1 { font-size: clamp(30px, 5vw, 48px); letter-spacing: -0.03em; line-height: 1.1; }
+h2 { font-size: clamp(22px, 3.4vw, 32px); }
+h3 { font-size: 19px; }
+p { margin: 0 0 1em; color: var(--muted); }
+p:last-child { margin-bottom: 0; }
+b, strong { font-weight: 500; color: var(--text); }
+a { color: var(--accent-ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  html { scroll-behavior: auto; }
+}
+
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+section { padding: var(--sec-y) 0; scroll-margin-top: 76px; }
+@media (max-width: 640px) { .wrap { padding: 0 16px; } :root { --sec-y: 52px; } }
+
+.eyebrow { display: block; font-size: 13px; font-weight: 500; letter-spacing: 0.01em; color: var(--accent-ink); margin-bottom: 12px; }
+.sub { color: var(--muted); font-size: clamp(16px, 2.2vw, 18px); max-width: 62ch; margin: 16px 0 0; }
+.sub b { color: var(--text); font-weight: 500; }
+
+/* topbar */
+.topbar { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--line); padding: 14px 20px; }
+.topbar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+.logo { font-weight: 500; font-size: 18px; letter-spacing: -0.03em; color: var(--text); flex: none; }
+.logo:hover { text-decoration: none; }
+.logo .metric { color: var(--accent-ink); }
+.logo .dot { color: var(--gm-yellow-text); }
+:root[data-theme="dark"] .logo .dot { color: var(--gm-yellow); }
+.topbar-tag { color: var(--muted); font-size: 13.5px; margin-left: 2px; }
+.theme-toggle {
+  margin-left: auto; background: var(--card); border: 1px solid var(--line); color: var(--text);
+  width: 36px; height: 36px; border-radius: var(--radius-control); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex: none;
+}
+.theme-toggle:hover { border-color: var(--line-strong); }
+.theme-toggle svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.theme-toggle .sun { display: none; }
+:root[data-theme="light"] .theme-toggle .sun { display: block; }
+:root[data-theme="light"] .theme-toggle .moon { display: none; }
+
+/* buttons */
+.btn-primary, .btn-ghost {
+  font-family: var(--font); font-weight: 500; font-size: 15px; padding: 13px 22px;
+  border-radius: var(--radius-control); border: 1px solid transparent; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-align: center;
+  transition: opacity .15s, background-color .15s, color .15s, border-color .15s;
+}
+.btn-primary:hover, .btn-ghost:hover { text-decoration: none; }
+.btn-primary { background: var(--gm-yellow); color: var(--gm-yellow-text); }
+.btn-primary:hover { opacity: .86; }
+.btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--text); }
+.btn-ghost:hover { background: var(--card); }
+
+/* chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: var(--radius-pill);
+  font-size: 12.5px; font-weight: 500; line-height: 1.5; border: 1px solid var(--line); background: var(--card); color: var(--muted);
+}
+.chip-accent { background: var(--accent); color: var(--accent-text); border-color: transparent; }
+.chip-soft { background: rgba(var(--accent-rgb), .12); border-color: rgba(var(--accent-rgb), .28); color: var(--accent-ink); }
+
+/* cards */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); padding: var(--pad-card); }
+.card > :last-child { margin-bottom: 0; }
+.card.is-lead { background: rgba(var(--accent-rgb), .08); border-color: rgba(var(--accent-rgb), .28); }
+
+/* facts row */
+.facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 32px; }
+@media (min-width: 640px) { .facts { grid-template-columns: repeat(4, 1fr); } }
+.fact { padding: 20px 16px; text-align: center; }
+.fact .n { display: block; font-size: clamp(24px, 3.6vw, 30px); font-weight: 500; letter-spacing: -0.03em; line-height: 1; color: var(--accent-ink); }
+.fact .l { display: block; color: var(--muted); font-size: 12.5px; margin-top: 8px; line-height: 1.4; }
+
+/* week grid */
+.weeks-grid { display: grid; gap: var(--gap); margin-top: 36px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .weeks-grid { grid-template-columns: repeat(2, 1fr); } }
+.week-card { display: flex; flex-direction: column; gap: 12px; }
+.week-top { display: flex; align-items: center; gap: 12px; }
+.week-n {
+  flex: none; width: 38px; height: 38px; border-radius: var(--radius-badge); background: var(--accent); color: var(--accent-text);
+  display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500;
+}
+.week-emoji { font-size: 21px; line-height: 1; }
+.week-title { font-size: 17px; font-weight: 500; margin: 0; }
+.week-card p { font-size: 14.5px; margin: 0; }
+.week-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.week-flag { font-size: 12px; font-weight: 500; color: var(--accent-ink); background: rgba(var(--accent-rgb), .12); padding: 3px 10px; border-radius: var(--radius-pill); align-self: flex-start; }
+
+/* split (homework section) */
+.split { display: grid; gap: 24px; margin-top: 36px; align-items: start; grid-template-columns: 1fr; }
+@media (min-width: 820px) { .split { grid-template-columns: 1fr 1fr; gap: 40px; } }
+.split-panel ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.split-panel li { display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; color: var(--muted); }
+.split-panel li b { color: var(--text); font-weight: 500; }
+.split-panel .tick {
+  flex: none; width: 22px; height: 22px; border-radius: 50%; margin-top: 1px;
+  background: rgba(var(--accent-rgb), .16); color: var(--accent-ink);
+  display: grid; place-items: center; font-size: 12px; font-weight: 500;
+}
+
+/* milestone rail */
+.rail { display: grid; gap: var(--gap); margin-top: 32px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .rail { grid-template-columns: repeat(3, 1fr); } }
+.milestone { display: flex; flex-direction: column; gap: 8px; }
+.milestone .wk { font-size: 12.5px; font-weight: 500; color: var(--accent-ink); letter-spacing: .02em; text-transform: uppercase; }
+.milestone h3 { margin: 0; font-size: 17px; }
+.milestone p { font-size: 14px; margin: 0; }
+
+/* faq */
+.faq-item { padding: 20px 0; border-top: 1px solid var(--line); }
+.faq-item:first-child { border-top: none; }
+.faq-item h3 { margin-bottom: 8px; font-size: 16px; }
+.faq-item p { font-size: 14.5px; }
+
+footer { border-top: 1px solid var(--line); padding: 40px 0; }
+footer .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+footer p { font-size: 13.5px; margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="logo" href="https://grammarmetric.com/"><span class="metric">grammar</span>metric<span class="dot">.</span></a>
+    <span class="topbar-tag">Parent guide</span>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme">
+      <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</div>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Cambridge World English · Stage 5</span>
+      <h1>Your child's 12-week English programme</h1>
+      <p class="sub">This is a plain-language walkthrough of what your child will learn, week by week, in their GrammarMetric English class — and how the homework in our web app connects to it. <b>90 minutes a week, in person or online, 12 weeks.</b></p>
+      <div class="facts">
+        <div class="fact card"><span class="n">12</span><span class="l">weeks, one class a week</span></div>
+        <div class="fact card"><span class="n">90</span><span class="l">minutes per class</span></div>
+        <div class="fact card"><span class="n">9</span><span class="l">topics, plus review &amp; a showcase</span></div>
+        <div class="fact card"><span class="n">A2→B1</span><span class="l">internationally benchmarked (CEFR)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="wrap">
+      <span class="eyebrow">The book</span>
+      <h2>Why Cambridge World English</h2>
+      <p class="sub">Your child's classes are built on <b>Cambridge Primary World English</b> (Hodder Education), a course endorsed by Cambridge Assessment International Education for full coverage of its official primary English-as-a-second-language curriculum. It's the same standard used by Cambridge International schools worldwide, which means your child's progress is measured against a recognised international benchmark, not a homemade one.</p>
+      <p class="sub">Stage 5 is written for confident beginners who already know the basics and are ready to build real fluency — describing the past, comparing things, giving advice, and telling stories, all around topics kids actually enjoy: ancient buildings, eco-heroes, baking, and emergency rescues.</p>
+    </div>
+  </section>
+
+  <section class="weeks">
+    <div class="wrap">
+      <span class="eyebrow">Week by week</span>
+      <h2>What your child will learn</h2>
+      <p class="sub">Every class follows the same shape: a warm-up, new words and grammar in context, a listening or reading activity, and a chance to speak or write — then a short homework task in the GrammarMetric app to lock it in.</p>
+
+      <div class="weeks-grid">
+
+        <div class="card week-card">
+          <div class="week-top"><span class="week-n">1</span><span class="week-emoji">😊</span><h3 class="week-title">Getting Started &amp; Feeling Good</h3></div>
+          <p>Settling in and learning to talk about feelings, everyday routines, and habits.</p>
+          <div class="week-tags"><span class="chip">Feelings &amp; routines</span></div>
+        </div>
+
+        <div class="card week-card">
+          <div class="week-top"><span class="week-n">2</span><span class="week-emoji">🍎</span><h3 class="week-title">Healthy Habits</h3></div>
+          <p>Food, exercise, and everyday choices — and how to give simple advice.</p>
+          <div class="week-tags"><span class="chip">Food &amp; health</span></div>
+        </div>
+
+        <div class="card week-card is-lead">
+          <div class="week-top"><span class="week-n">3</span><span class="week-emoji">🏛️</span><h3 class="week-title">Ancient Buildings</h3></div>
+          <p>Describing famous old places and what happened there — first look at the past tense.</p>
+          <div class="week-tags"><span class="chip">History &amp; description</span></div>
+          <span class="week-flag">Progress review 1</span>
+        </div>
+
+        <div class="card week-card">
+          <div class="week-top"><span class="week-n">4</span><span class="week-emoji">📖</span><h3 class="week-title">Great Stories</h3></div>
+          <p>Telling and understanding short stories, and putting events in order.</p>
+          <div class="week-tags"><span class="chip">Storytelling</span></div>
+        </div>
+
+        <div class="card week-card">
+          <div class="week-top"><span class="week-n">5</span><span class="week-emoji">🌱</span><h3 class="week-title">Be an Eco-Hero</h3></div>
+          <p>Talking about the environment and giving advice — "should," "must," recycling and more.</p>
+          <div class="week-tags"><span class="chip">Environment &amp; advice</span></div>
+        </div>
+
+        <div class="card week-card is-lead">
+          <div class="week-top"><span class="week-n">6</span><span class="week-emoji">✈️</span><h3 class="week-title">Travel Zone</h3></div>
+          <p>Comparing places and planning a trip — comparatives and future plans.</p>
+          <div class="week-tags"><span class="chip">Travel &amp; comparing</span></div>
+          <span class="week-flag">Progress review 2</span>
+        </div>
+
+        <div class="card week-card">
+          <div class="week-top"><span class="week-n">7</span><span class="week-emoji">🧁</span><h3 class="week-title">Bake Off</h3></div>
+          <p>Following and giving instructions — first, next, then — through a cooking theme.</p>
+          <div class="week-tags"><span class="chip">Instructions &amp; sequencing</span></div>
+        </div>
+
+        <div class="card week-card">
+          <div class="week-top"><span class="week-n">8</span><span class="week-emoji">🚨</span><h3 class="week-title">Red Alert</h3></div>
+          <p>Recounting an exciting or unexpected event — emergency services and safety.</p>
+          <div class="week-tags"><span class="chip">Storytelling &amp; safety</span></div>
+        </div>
+
+        <div class="card week-card is-lead">
+          <div class="week-top"><span class="week-n">9</span><span class="week-emoji">🧭</span><h3 class="week-title">Explorers Through Time</h3></div>
+          <p>Learning about famous explorers and pulling the term's past-tense skills together.</p>
+          <div class="week-tags"><span class="chip">History &amp; exploration</span></div>
+          <span class="week-flag">Progress review 3</span>
+        </div>
+
+        <div class="card week-card">
+          <div class="week-top"><span class="week-n">10</span><span class="week-emoji">🎨</span><h3 class="week-title">Project Showcase</h3></div>
+          <p>Your child plans, builds, and presents a project using everything learned so far.</p>
+          <div class="week-tags"><span class="chip">Presenting</span></div>
+        </div>
+
+        <div class="card week-card">
+          <div class="week-top"><span class="week-n">11</span><span class="week-emoji">🔁</span><h3 class="week-title">Practice &amp; Review</h3></div>
+          <p>Focused practice on each child's own strengths and growing edges, based on the term's homework results.</p>
+          <div class="week-tags"><span class="chip">Personalised review</span></div>
+        </div>
+
+        <div class="card week-card is-lead">
+          <div class="week-top"><span class="week-n">12</span><span class="week-emoji">🎉</span><h3 class="week-title">Final Check-in &amp; Celebration</h3></div>
+          <p>A friendly listening, speaking, reading and writing check-in, followed by a wrap-up celebration.</p>
+          <div class="week-tags"><span class="chip">End-of-term assessment</span></div>
+          <span class="week-flag">Final assessment</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="homework">
+    <div class="wrap">
+      <span class="eyebrow">At home</span>
+      <h2>How homework works</h2>
+      <div class="split">
+        <div class="split-txt">
+          <p class="sub">Every week's class ends with a short homework task assigned through the <b>GrammarMetric web app</b>. It's designed to take 10–15 minutes, not hours — enough to lock in what was covered in class without turning evenings into a fight.</p>
+          <p class="sub">You don't need to teach the material yourself. If your child gets stuck, that's useful information for us — it tells the teacher exactly what to revisit next class.</p>
+        </div>
+        <div class="split-panel card">
+          <ul>
+            <li><span class="tick">✓</span><span><b>Short practice tasks</b> — a quick quiz on that week's words and grammar, auto-marked so results are instant.</span></li>
+            <li><span class="tick">✓</span><span><b>A speaking task most weeks</b> — a short recording your child submits through the app.</span></li>
+            <li><span class="tick">✓</span><span><b>Free audio</b> — official course audio your child can replay at home as often as they like.</span></li>
+            <li><span class="tick">✓</span><span><b>A weekly self-check</b> — "I can…" statements your child ticks off themselves, building the habit of noticing their own progress.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="progress">
+    <div class="wrap">
+      <span class="eyebrow">Tracking growth</span>
+      <h2>Three points to check in</h2>
+      <p class="sub">Alongside the weekly homework, we mark three points in the term where you can expect a clear picture of how things are going.</p>
+      <div class="rail">
+        <div class="milestone card">
+          <span class="wk">Week 1</span>
+          <h3>Starting point</h3>
+          <p>A relaxed first check of what your child can already do, so we know where to begin.</p>
+        </div>
+        <div class="milestone card">
+          <span class="wk">Week 6</span>
+          <h3>Halfway check-in</h3>
+          <p>A look at progress so far, and what the second half of the term will focus on.</p>
+        </div>
+        <div class="milestone card">
+          <span class="wk">Week 12</span>
+          <h3>End-of-term picture</h3>
+          <p>The final check-in, plus a clear look at what's next for your child's English.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="wrap">
+      <span class="eyebrow">Good to know</span>
+      <h2>Questions parents ask</h2>
+
+      <div class="faq-item">
+        <h3>What if my child hasn't studied English formally before?</h3>
+        <p>Stage 5 assumes some prior English rather than a completely blank slate — the first class doubles as a friendly check so we can add extra support where it's needed, right from week one.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What if my child is already quite advanced?</h3>
+        <p>Stronger students get extra stretch activities throughout the term, and by the later weeks we start previewing the next level up so they're never marking time.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do we need to buy anything extra?</h3>
+        <p>No — course materials and the GrammarMetric homework app are included. All you need at home is something to listen on for the audio practice.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What happens after these 12 weeks?</h3>
+        <p>Most students continue into the next stage of the same course. We'll let you know at the Week 12 check-in exactly where your child stands and what we'd recommend next.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <p>GrammarMetric · English language classes in Bangkok</p>
+    <a class="btn-ghost" href="https://grammarmetric.com/">Visit grammarmetric.com →</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY = 'gm_theme';
+  var btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', function(){
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
+</script>
+
+</body>
+</html>
